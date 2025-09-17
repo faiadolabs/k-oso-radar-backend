@@ -11,10 +11,10 @@ COPY package*.json ./
 RUN npm install --omit=dev
 
 # Copia el código fuente
-COPY src/server.js .
+COPY src ./src
 
 # Expone el puerto que usará la app
 EXPOSE 3000
 
 # Comando de inicio
-CMD ["node", "server.js"]
+CMD ["node", "src/server.js"]
