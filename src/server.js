@@ -1,4 +1,5 @@
 // server.js
+const { version } = require('../package.json');
 const express = require("express");
 const http = require("http");
 const { Server } = require("socket.io");
@@ -9,6 +10,40 @@ const io = new Server(server, {
   cors: {
     origin: "*", // en producción limita al dominio de tu frontend
   }
+});
+
+app.get('/', (req, res) => {
+  const html = `
+    <!DOCTYPE html>
+    <html lang="es">
+    <head>
+      <meta charset="UTF-8">
+      <title>k-oso-radar-backend</title>
+      <style>
+        body {
+          font-family: monospace;
+          background-color: #f5f5f5;
+          color: #333;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          height: 100vh;
+          margin: 0;
+        }
+        .version {
+          margin-top: 10px;
+        }
+      </style>
+    </head>
+    <body>
+      <div>k-oso-radar-backend</div>
+      <div class="version">v${version}</div>
+      <div>© k-oso 2025</div>
+    </body>
+    </html>
+  `;
+  res.send(html);
 });
 
 // Aquí almacenamos los registros en memoria (array simple)
@@ -75,4 +110,30 @@ io.on("connection", (socket) => {
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
   console.log(`Servidor WebSocket escuchando en puerto ${PORT}`);
+});
+
+process.on('SIGINT', () => {
+  console.log('\n¡Se recibió CTRL+C! Cerrando servidor...');
+  server.close(() => {
+    console.log('Servidor cerrado correctamente.');
+    process.exit();
+  });
+});
+
+process.on('SIGTERM', () => {
+  console.log('Señal SIGTERM recibida, cerrando servidor...');
+  server.close(() => {
+    console.log('Servidor cerrado.');
+    process.exit(0);
+  });
+});
+
+process.on('uncaughtException', (err) => {
+  console.error('Error no capturado:', err);
+  process.exit(1); // siempre salir después de loguear
+});
+
+process.on('unhandledRejection', (reason) => {
+  console.error('Promesa rechazada sin catch:', reason);
+  process.exit(1);
 });
