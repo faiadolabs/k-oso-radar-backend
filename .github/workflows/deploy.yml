@@ -28,8 +28,9 @@ jobs:
       - name: Build Docker image
         run: |
           docker build -t faiadolabs/k-oso-radar-backend:${{ github.sha }} .
-          docker tag "faiadolabs/k-oso-radar-backend:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/k-oso-radar-backend:latest"
-          docker tag "faiadolabs/k-oso-radar-backend:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/k-oso-radar-backend:${VERSION}"
+          docker tag faiadolabs/k-oso-radar-backend:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/k-oso-radar-backend:latest
+          docker tag faiadolabs/k-oso-radar-backend:${{ github.sha }} ${{ secrets.DOCKERHUB_USERNAME }}/k-oso-radar-backend:${VERSION}
+
 
       - name: Push Docker image
         run: |
