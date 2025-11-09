@@ -12,6 +12,14 @@ This subcomponent using WebSockets allows synchronizing point recognition betwee
 
 ![client connection](doc/img/backend.png)
 
+## Quick Start ()
+
+```bash
+docker run -p 3000:3000 faiadolabs/k-oso-radar-backend
+```
+
+Then you can hit [`http://localhost:3000`](http://localhost:3000) or `http://host-ip:3000` in your browser.
+
 ## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request.
