@@ -14,7 +14,7 @@ RUN npm install --omit=dev
 COPY src ./src
 
 # Crear el usuario no privilegiado
-RUN addgroup -S k-oso && adduser -S -G k-oso k-oso
+RUN groupadd -r k-oso && useradd -r -g k-oso k-oso
 
 USER k-oso
 
